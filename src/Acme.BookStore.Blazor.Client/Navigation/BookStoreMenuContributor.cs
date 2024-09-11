@@ -61,9 +61,23 @@ public class BookStoreMenuContributor : IMenuContributor
 
         administration.SetSubItemOrder(IdentityMenuNames.GroupName, 2);
         administration.SetSubItemOrder(SettingManagementMenus.GroupName, 3);
-    }
 
-    private async Task ConfigureUserMenuAsync(MenuConfigurationContext context)
+		context.Menu.AddItem(
+		new ApplicationMenuItem(
+			"BooksStore",
+			l["Menu:BookStore"],
+			icon: "fa fa-book"
+		).AddItem(
+			new ApplicationMenuItem(
+				"BooksStore.Books",
+				l["Menu:Books"],
+				url: "/books"
+			)
+		)
+	);
+	}
+
+	private async Task ConfigureUserMenuAsync(MenuConfigurationContext context)
     {
         var accountStringLocalizer = context.GetLocalizer<AccountResource>();
         var authServerUrl = _configuration["AuthServer:Authority"] ?? "";
